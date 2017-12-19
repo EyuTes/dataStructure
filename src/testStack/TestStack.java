@@ -9,10 +9,10 @@ import org.junit.Test;
 import stack.*;
 
 public class TestStack {
-	
+
 	int count = 0;
-	
-	IntArrayStack intArrayStack = new IntArrayStack(10);// Array with size=10
+
+	IntArrayStack intArrayStack = new IntArrayStack(6);// Array with size=6
 
 	/* Executed before every test method. */
 	@Before
@@ -29,10 +29,12 @@ public class TestStack {
 	@Test
 	public void testIsStackEmpty() {
 
-		boolean expected = true;
+		boolean isEmpty = true;// Expected
+		boolean isFull = false;// Expected
 
-		assertEquals(expected, intArrayStack.isEmpty());
+		assertEquals(isEmpty, intArrayStack.isEmpty());
 
+		assertEquals(isFull, intArrayStack.isFull());
 	}
 
 	@Test
@@ -64,4 +66,28 @@ public class TestStack {
 		assertTrue(isEmpty);
 	}
 
+	@Test
+	public void testStackIsFull() {
+		
+		boolean isFull = false;// Expected
+		assertEquals(isFull, intArrayStack.isFull());
+		
+		intArrayStack.push(10);
+		intArrayStack.push(20);
+		intArrayStack.push(30);
+		intArrayStack.push(40);
+		intArrayStack.push(50);
+		intArrayStack.push(60);
+		
+				
+		/* Test that throws exception */
+		try {
+			intArrayStack.push(70);
+		} catch (IndexOutOfBoundsException e) {
+			isFull = true;
+		}
+		assertTrue(isFull);
+		
+		
+	}
 }
