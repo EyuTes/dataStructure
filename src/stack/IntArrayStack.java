@@ -1,5 +1,6 @@
 package stack;
 
+
 public class IntArrayStack {
 
 	private int values[];
@@ -28,5 +29,8 @@ public class IntArrayStack {
 
 	public boolean isEmpty() {
 		return top == 0;
+	}
+	public boolean isFull(){
+		return top==values.length-1;
 	}
 }
