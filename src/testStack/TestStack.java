@@ -6,16 +6,20 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import stack.*;
+import simpleStack.*;
 
 public class TestStack {
 
 	int count = 0;
-
+    
 	IntArrayStack intArrayStack = new IntArrayStack(6);// Array with size=6
 	DoubleArrayStack doubleArrayStack = new DoubleArrayStack(8);// Array with size=8
 	StringArrayStack stringArrayStack = new StringArrayStack(4);// Array with size=4
-
+	ObjectArrayStack objectArrayStack = new ObjectArrayStack(5);// Array with size=5
+	GenericArrayStack<Object> objArrayStack = new GenericArrayStack<>(3);// Array with size=3
+	GenericArrayStack<String> strArrayStack = new GenericArrayStack<>(3);// Array with size=3
+	
+	
 	/* Executed before every test method. */
 	@Before
 	public void setUp() {
@@ -37,10 +41,16 @@ public class TestStack {
 		assertEquals(isEmpty, intArrayStack.isEmpty());
 		assertEquals(isEmpty, doubleArrayStack.isEmpty());
 		assertEquals(isEmpty, stringArrayStack.isEmpty());
+		assertEquals(isEmpty, objectArrayStack.isEmpty());
+		assertEquals(isEmpty, objArrayStack.isEmpty());
+		assertEquals(isEmpty, strArrayStack.isEmpty());
 		
 		assertEquals(isFull, intArrayStack.isFull());
 		assertEquals(isFull, doubleArrayStack.isFull());
 		assertEquals(isFull, stringArrayStack.isFull());
+		assertEquals(isFull, objectArrayStack.isFull());
+		assertEquals(isFull, objArrayStack.isFull());
+		assertEquals(isFull, strArrayStack.isFull());
 	}
 
 	@Test
@@ -121,6 +131,64 @@ public class TestStack {
 			isStringArrayStackEmpty = true;
 		}
 		assertTrue(isStringArrayStackEmpty);
+		
+		/* for object data type */
+		objectArrayStack.push(5);//integer data type
+		objectArrayStack.push(923.45);//double data type
+		objectArrayStack.push("Swift");//String data type
+		objectArrayStack.push(false);//boolean data type
+		objectArrayStack.push(stringArrayStack);//object data type
+		expected=5;
+		assertEquals(objectArrayStack.size(), expected);
+		assertEquals(objectArrayStack.top(), stringArrayStack);
+		assertEquals(objectArrayStack.pop(), stringArrayStack);
+		assertEquals(objectArrayStack.pop(), false);
+		assertEquals(objectArrayStack.pop(), "Swift");
+		assertEquals(objectArrayStack.pop(), 923.45);
+		assertEquals(objectArrayStack.pop(), 5);
+		boolean isObjectArrayStackEmpty=false;
+		try {
+			stringArrayStack.pop();
+		} catch (IndexOutOfBoundsException e) {
+			isObjectArrayStackEmpty = true;
+		}
+		assertTrue(isObjectArrayStackEmpty);
+		
+		/* for generic object data type */
+		objArrayStack.push(true);//boolean data type
+		objArrayStack.push(123.67);//double data type
+		objArrayStack.push("PHP");
+		expected=3;
+		assertEquals(objArrayStack.size(), expected);
+		assertEquals(objArrayStack.top(), "PHP");
+		assertEquals(objArrayStack.pop(), "PHP");
+		assertEquals(objArrayStack.pop(), 123.67);
+		assertEquals(objArrayStack.pop(), true);
+		boolean isgenericStackEmpty=false;
+		try {
+			objArrayStack.pop();
+		} catch (IndexOutOfBoundsException e) {
+			isgenericStackEmpty = true;
+		}
+		assertTrue(isgenericStackEmpty);
+		/* for generic string data type */
+		
+		strArrayStack.push("Afar");//boolean data type
+		strArrayStack.push("Borena");//double data type
+		strArrayStack.push("Agew");
+		expected=3;
+		assertEquals(strArrayStack.size(), expected);
+		assertEquals(strArrayStack.top(), "Agew");
+		assertEquals(strArrayStack.pop(), "Agew");
+		assertEquals(strArrayStack.pop(), "Borena");
+		assertEquals(strArrayStack.pop(), "Afar");
+		boolean isgStringStackEmpty=false;
+		try {
+			strArrayStack.pop();
+		} catch (IndexOutOfBoundsException e) {
+			isgStringStackEmpty = true;
+		}
+		assertTrue(isgStringStackEmpty);
 	}
 
 	@Test
@@ -136,7 +204,6 @@ public class TestStack {
 		intArrayStack.push(50);
 		intArrayStack.push(60);
 		
-				
 		/* Test that throws exception */
 		try {
 			intArrayStack.push(70);
@@ -174,5 +241,42 @@ public class TestStack {
 			isStringArrayStackFull = true;
 		}
 		assertTrue(isStringArrayStackFull);
+		
+		/* for Object data type */
+		boolean isObjectArrayStackFull=false;
+		objectArrayStack.push("Physics");
+		objectArrayStack.push(345);
+		objectArrayStack.push("Mathematics");
+		objectArrayStack.push(45.98);
+		objectArrayStack.push(intArrayStack);
+		try {
+			objectArrayStack.push("Biology");
+		} catch (IndexOutOfBoundsException e) {
+			isObjectArrayStackFull = true;
+		}
+		assertTrue(isObjectArrayStackFull);
+		/* object data type for generic  class*/
+		boolean isGenericObjectArrayStackFull=false;
+		objArrayStack.push(45);
+		objArrayStack.push(23.98);
+		objArrayStack.push("konso");
+		try {
+			objectArrayStack.push("Argoba");
+		} catch (IndexOutOfBoundsException e) {
+			isGenericObjectArrayStackFull = true;
+		}
+		assertTrue(isGenericObjectArrayStackFull);
+		/* string data type  for generic class*/
+		boolean isGenericStringArrayStackFull=false;
+		strArrayStack.push("Amharic");
+		strArrayStack.push("Oromo language");
+		strArrayStack.push("Tigrinya");
+		try {
+			strArrayStack.push("Somali");
+		} catch (IndexOutOfBoundsException e) {
+			isGenericStringArrayStackFull = true;
+		}
+		assertTrue(isGenericStringArrayStackFull);
+		
 	}
 }

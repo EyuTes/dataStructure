@@ -1,4 +1,4 @@
-package stack;
+package simpleStack;
 
 public class StringArrayStack {
 	
